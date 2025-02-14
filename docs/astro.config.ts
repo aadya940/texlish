@@ -29,6 +29,10 @@ export default defineConfig({
           link: '/',
         },
         {
+          label: 'Getting Started',
+          slug: 'start',
+        },
+        {
           label: 'Reference',
           slug: 'reference',
         },

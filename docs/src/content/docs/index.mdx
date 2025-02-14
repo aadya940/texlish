@@ -8,6 +8,9 @@ hero:
     file: ../../assets/logo.svg
     alt: "Logo which reads >tex: - lish"
   actions:
+    - text: Getting Started
+      link: /start
+      icon: right-arrow
     - text: Reference Documentation
       link: /reference
       icon: right-arrow
@@ -29,6 +32,18 @@ you can write/import regular LaTeX,
 and gradually transition to Texlish's cleaner syntax at your own pace.
 
 Try Texlish for your next document, paper, or presentation!
+
+## Quickstart
+
+```sh
+# Install/update Texlish (assuming NodeJS is installed)
+npm install -g texlish@latest
+# Compile a .texlish file to PDF
+texlish --pdf filename.texlish
+```
+
+If you want to use a different LaTeX engine than `pdflatex`,
+see [the CLI documentation](/start) for more options.
 
 ## Examples
 

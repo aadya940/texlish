@@ -1,0 +1,30 @@
+---
+title: Command-Line Interface
+description: How to run texlish from the command line
+---
+## Installation
+
+To install for the first time, or update your installation of Texlish,
+run the following command
+(assuming you have [NodeJS](https://nodejs.org/en) installed):
+
+```sh
+npm install -g texlish@latest
+```
+
+## Compilation
+
+You can compile a `.texlish` file as follows:
+
+```sh
+# Compile to filename.tex and run pdflatex to make filename.pdf
+texlish --pdf filename.texlish
+# Compile to filename.tex and run xelatex to make filename.pdf
+texlish --xe filename.texlish
+# Compile to filename.tex and run lualatex to make filename.pdf
+texlish --lua filename.texlish
+# Compile to filename.tex and run latex to make filename.dvi
+texlish --latex filename.texlish
+# Just compile to filename.tex
+texlish filename.texlish
+```
