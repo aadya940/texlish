@@ -37,7 +37,7 @@ Similar to Markdown emphasis.
 You can also redefine the meaning of these symbols:
 
 <Example src={`
-  >>styles
+  ::styles
     * = \\textit
     ** = \\textsf
     *** = \\texttt
@@ -105,7 +105,7 @@ If you want to use a custom `\ref` system, such as `cleveref`, you can
 override the meaning of these symbols:
 
 <Example src={`
-  >>styles
+  ::styles
     @ = \\cref
     #@ = \\cpageref
   @thm:main
@@ -182,18 +182,19 @@ Multiple arguments can be specified like a list:
 
 ## Environments
 
-`>env` is shorthand for `\begin{env} ... \end{env}`.
+`: env` is shorthand for `\begin{env} ... \end{env}`.
+You must have a space after the colon, similar to [list bullets](#lists).
 Indent the contents.
 
 <Example src={`
-  > theorem
+  : theorem
     $p$ is prime.
 `}/>
 
 Required arguments can be specified with a colon:
 
 <Example src={`
-  > tabular: ccc
+  : tabular: ccc
     1 & 2 & 3
 `}/>
 
@@ -201,25 +202,25 @@ If indented, they must use a bullet (to separate the environment
 from the content):
 
 <Example src={`
-  > tabular:
+  : tabular:
     - ccc
     1 & 2 & 3
 `}/>
 
 <Example src={`
-  > theorem:
+  : theorem:
     ~ Main Result
     $p$ is prime.
 `}/>
 
 ## Use Packages
 
-`>>use` is shorthand for putting `\usepackage{...}` in the preamble.
+`::use` is shorthand for putting `\usepackage{...}` in the preamble.
 
 <Example src={`
-  >>use amsmath
-  >>use geometry: margin=1in, letterpaper
-  >>use hyperref:
+  ::use amsmath
+  ::use geometry: margin=1in, letterpaper
+  ::use hyperref:
     pdftitle = Hello World
     pdfauthor = Me
 `}/>
@@ -227,7 +228,7 @@ from the content):
 You can use many packages at once as an indented block:
 
 <Example src={`
-  >>use
+  ::use
     amsmath
     geometry: margin = 1in
     hyperref:
@@ -235,28 +236,28 @@ You can use many packages at once as an indented block:
       - pdfauthor = Me
 `}/>
 
-If you put `>>use` after `\begin{document}`, it gets hoisted up to the preamble.
+If you put `::use` after `\begin{document}`, it gets hoisted up to the preamble.
 
 <Example complete src={`
   \\documentclass{article}
   \\begin{document}
   Here is the proof:
-  >>use amsthm
-  > proof
+  ::use amsthm
+  : proof
   \\end{document}
 `}/>
 
 ## Preamble
 
-`>>preamble` puts LaTeX code in the preamble.
+`::preamble` puts LaTeX code in the preamble.
 If it appears after `\begin{document}`, it gets hoisted up.
 
 <Example complete src={`
   \\documentclass{article}
   \\begin{document}
   Here is the theorem:
-  >>preamble \\newtheorem{theorem}{Theorem}
-  >theorem
+  ::preamble \\newtheorem{theorem}{Theorem}
+  :theorem
   \\end{document}
 `}/>
 
@@ -286,9 +287,9 @@ and/or report a bug.
 
 <Example complete src={`
   % Comment
-  >>use amsthm
+  ::use amsthm
   \\newtheorem{theorem}{Theorem}
-  > theorem
+  : theorem
 `}/>
 
 <Example complete src={`

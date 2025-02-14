@@ -226,7 +226,7 @@ Autolink
 Environment
   # use NestedItem* instead of NestedBody so that we can PushIndent early
   # (in case ColonArgument involves multiple lines)
-  &/[ \t]*>/ Indent:indent PushIndent ( />[ \t]*([^:\s\[%]+)/ ( InlineColonArgument / TrimmedText ) NestedItem* )?:content PopIndent ->
+  &/[ \t]*:[ \t]/ Indent:indent PushIndent ( /:[ \t]+([^:\s\[%]+)/ ( InlineColonArgument / TrimmedText ) NestedItem* )?:content PopIndent ->
     if (!content) return $skip
     let [ env, first, body ] = content
     env = env[1].trim()
@@ -306,7 +306,7 @@ InlineArgumentAfterColon
     }
 
 MetaBlock
-  &/[ \t]*>>/ Indent:indent ">>" /\s*/ MetaCommand:cmd -> [indent, cmd]
+  &/[ \t]*::/ Indent:indent "::" /\s*/ MetaCommand:cmd -> [indent, cmd]
 
 MetaCommand
   MetaStyles

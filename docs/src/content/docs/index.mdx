@@ -39,7 +39,7 @@ Try Texlish for your next document, paper, or presentation!
   \\author: Me
     \\and Myself
 
-  >>use
+  ::use
     amsthm
     geometry: margin=1in
   \\newtheorem:
@@ -54,9 +54,9 @@ Try Texlish for your next document, paper, or presentation!
   *This* is an **example** of ***Texlish***.
   See [[texlish.org]] for more documentation.
 
-  > theorem @=thm:main
+  : theorem @=thm:main
     This is a theorem.
-  > proof[sketch]
+  : proof[sketch]
     By recursion; see @thm:main.
 
 
@@ -69,7 +69,7 @@ Try Texlish for your next document, paper, or presentation!
 ### Figure with Subfigures
 
 <Example src={`
-  > figure
+  : figure
     \\subcaptionbox:
       - Subfigure 1
       - \\includegraphics: example1.png
