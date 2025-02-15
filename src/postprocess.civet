@@ -31,7 +31,7 @@ function processMarkdown(root: AST[]): void
       // ends after the first ends, the first takes precedence.
       if child.close and opens#
         close .= child.token!
-        for i of [opens#-1..0]
+        for i of [opens#>..0]
           function opener(delim: string): string
             (opens[i].styles[delim] ?? "") + '{'
           open .= opens[i].token!
