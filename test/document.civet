@@ -69,7 +69,7 @@ describe '\\begin/\\end{document}', ->
   testCase '''
     existing environment
     ---
-    > document
+    : document
       Hello, world!
     ---
     \\documentclass[11pt]{article}
@@ -84,8 +84,8 @@ describe '\\begin/\\end{document}', ->
     % comment
       % comment
     \\usepackage{foo}
-    >> use foo
-    >> preamble cheating
+    :: use foo
+    :: preamble cheating
     \\foo
       {bar}
     # Hello
@@ -108,7 +108,7 @@ describe '\\begin/\\end{document}', ->
   testCase '''
     begin placement before environment
     ---
-    > theorem
+    : theorem
     ---
     \\documentclass[11pt]{article}
 
@@ -198,18 +198,18 @@ describe '\\maketitle', ->
     \\end{document}
   ''', fragment: false
 
-describe '>>preamble', ->
+describe '::preamble', ->
   testCase '''
     preamble after text
     ---
     Hello
-    >> preamble \\newtheorem{thm}{Theorem}
-    > thm
-    >>preamble \\newtheorem{lem}{Lemma}
-    > lem
-    >>preamble
+    :: preamble \\newtheorem{thm}{Theorem}
+    : thm
+    ::preamble \\newtheorem{lem}{Lemma}
+    : lem
+    ::preamble
       %more text
-    >>use foo
+    ::use foo
     ---
     \\documentclass[11pt]{article}
     \\newtheorem{thm}{Theorem}
@@ -231,10 +231,10 @@ describe '>>preamble', ->
   testCase '''
     preamble before text
     ---
-    >> preamble \\newtheorem{thm}{Theorem}
-    >>preamble
+    :: preamble \\newtheorem{thm}{Theorem}
+    ::preamble
       %more text
-    >>use foo
+    ::use foo
     Hello
     ---
     \\documentclass[11pt]{article}
@@ -253,10 +253,10 @@ describe '>>preamble', ->
     preamble before explicit begin
     ---
     Hello
-    >> preamble \\newtheorem{thm}{Theorem}
-    >>preamble
+    :: preamble \\newtheorem{thm}{Theorem}
+    ::preamble
       %more text
-    >>use foo
+    ::use foo
     \\begin{document}
     ---
     \\documentclass[11pt]{article}
@@ -271,13 +271,13 @@ describe '>>preamble', ->
   ''', fragment: false
 
   testCase '''
-    preamble inside >document
+    preamble inside : document
     ---
-    > document
-      >> preamble \\newtheorem{thm}{Theorem}
-      >>preamble
+    : document
+      :: preamble \\newtheorem{thm}{Theorem}
+      ::preamble
         %more text
-      >>use foo
+      ::use foo
       Hello
     ---
     \\documentclass[11pt]{article}
@@ -291,12 +291,12 @@ describe '>>preamble', ->
   ''', fragment: false
 
   testCase '''
-    >>preamble and >>uses
+    ::preamble and ::uses
     ---
-    >>preamble \\newtheorem{thm}{Theorem}
-    >> use
+    ::preamble \\newtheorem{thm}{Theorem}
+    :: use
       amsthm
-    >>preamble \\newtheorem{lem}{Lemma}
+    ::preamble \\newtheorem{lem}{Lemma}
     \\newtheorem:
       - theorem
       - Theorem
@@ -316,12 +316,12 @@ describe '>>preamble', ->
   ''', fragment: false
 
   testCase '''
-    nested >>preamble
+    nested ::preamble
     ---
     Hello
-    >>preamble
+    ::preamble
       before
-      >>preamble nested
+      ::preamble nested
       after
     ---
     \\documentclass[11pt]{article}

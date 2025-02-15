@@ -1,10 +1,10 @@
 { testCase } from ./helper.civet
 
-describe '> environments', ->
+describe ': environments', ->
   testCase '''
     empty
     ---
-    > theorem
+    : theorem
     ---
     \\begin{theorem}
     \\end{theorem}
@@ -13,7 +13,7 @@ describe '> environments', ->
   testCase '''
     indented body
     ---
-    > theorem
+    : theorem
       Cool!
     ---
     \\begin{theorem}
@@ -24,7 +24,7 @@ describe '> environments', ->
   testCase '''
     same-line argument
     ---
-    > theorem: Hello
+    : theorem: Hello
       Cool!
     ---
     \\begin{theorem}{Hello}%
@@ -35,7 +35,7 @@ describe '> environments', ->
   testCase '''
     optional argument
     ---
-    > theorem:
+    : theorem:
       ~ Hello
       Cool!
     ---
@@ -48,7 +48,7 @@ describe '> environments', ->
   testCase '''
     optional argument via square brackets
     ---
-    > proof[sketch]
+    : proof[sketch]
       By example.
     ---
     \\begin{proof}[sketch]
@@ -59,7 +59,7 @@ describe '> environments', ->
   testCase '''
     with nested commands
     ---
-    > figure
+    : figure
       \\subcaptionbox:
         - Subfigure 1
         - \\includegraphics: example1
@@ -80,9 +80,9 @@ describe '> environments', ->
   testCase '''
     with comment
     ---
-    > theorem% Big Theorem
+    : theorem% Big Theorem
       Cool!
-    > theorem % Big Theorem
+    : theorem % Big Theorem
       Cool!
     ---
     \\begin{theorem}% Big Theorem

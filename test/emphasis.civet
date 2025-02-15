@@ -48,7 +48,7 @@ describe 'Markdown emphasis (*/**/***)', ->
   testCase '''
     custom style
     ---
-    >> styles
+    :: styles
       * = \\textit
       ** = \\textsf
       *** = \\texttt
@@ -64,7 +64,7 @@ describe 'Markdown emphasis (*/**/***)', ->
   testCase '''
     empty styles
     ---
-    >>styles
+    ::styles
     *italic*
     ---
     \\emph{italic}

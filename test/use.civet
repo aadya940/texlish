@@ -1,10 +1,10 @@
 { testCase } from ./helper.civet
 
-describe '>>use', ->
+describe '::use', ->
   testCase '''
     single package on one line
     ---
-    >>use amsmath
+    ::use amsmath
     ---
     \\usepackage{amsmath}
   '''
@@ -12,7 +12,7 @@ describe '>>use', ->
   testCase '''
     multiple packages on one line
     ---
-    >>use amsmath, latexsym
+    ::use amsmath, latexsym
     ---
     \\usepackage{amsmath, latexsym}
   '''
@@ -20,7 +20,7 @@ describe '>>use', ->
   testCase '''
     single package with argument on one line
     ---
-    >>use geometry: margin = 1in
+    ::use geometry: margin = 1in
     ---
     \\usepackage[margin = 1in]{geometry}
   '''
@@ -28,7 +28,7 @@ describe '>>use', ->
   testCase '''
     single package on one line with nested argument
     ---
-    >>use geometry:
+    ::use geometry:
       margin = 1in
     ---
     \\usepackage[
@@ -38,7 +38,7 @@ describe '>>use', ->
   testCase '''
     multiple nested packages
     ---
-    >>use
+    ::use
       amsmath
       colortbl
       cleveref
@@ -52,7 +52,7 @@ describe '>>use', ->
   testCase '''
     multiple nested packages with bullets
     ---
-    >>use
+    ::use
       * amsmath
       - colortbl
       ~ cleveref
@@ -66,7 +66,7 @@ describe '>>use', ->
   testCase '''
     same-line package with arguments
     ---
-    >>use hyperref:
+    ::use hyperref:
       - pdftitle = Hello World
       - pdfauthor = Me
     ---
@@ -78,7 +78,7 @@ describe '>>use', ->
   testCase '''
     nested packages with arguments
     ---
-    >>use
+    ::use
       amsmath
       colortbl
       cleveref
@@ -98,7 +98,7 @@ describe '>>use', ->
   testCase '''
     more nested packages with arguments
     ---
-    >>use
+    ::use
       geometry: margin=1in
       hyperref:
         - pdftitle = Hello World

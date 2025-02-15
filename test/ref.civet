@@ -30,7 +30,7 @@ describe '@ shorthand for \\ref, \\label, etc.', ->
   testCase '''
     label in theorem
     ---
-    > theorem @=thm:big
+    : theorem @=thm:big
     ---
     \\begin{theorem}\\label{thm:big}
     \\end{theorem}
@@ -39,7 +39,7 @@ describe '@ shorthand for \\ref, \\label, etc.', ->
   testCase '''
     custom ref/label
     ---
-    >>styles
+    ::styles
       @ = \\cref
       #@ = \\pagecref
       @= = \\clabel

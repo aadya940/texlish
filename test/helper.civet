@@ -9,18 +9,18 @@ export function compare(src: string, result: string, compilerOpts: CompilerOptio
     ...compilerOpts
   })
 
-  assert.equal compileResult, result, """
-    #{filename}
+  assert.equal compileResult, result, ```
+    ${filename}
     --- Source   ---
-    #{src}
+    ${src}
 
     --- Expected ---
-    #{result}
+    ${result}
 
     --- Got      ---
-    #{compileResult}
+    ${compileResult}
 
-  """
+  ```
 
 /**
  * Pass a string with the following format:
@@ -82,15 +82,15 @@ function throws(text: string, compilerOpts?: CompilerOptions, opt?: "only" | "sk
     assert.throws
       => e && throw e
       undefined as any
-      """
+      ```
 
         --- Source   ---
-        #{src}
+        ${src}
 
         --- Got      ---
-        #{result!}
+        ${result!}
 
-        """
+      ```
     // Then check against desired error message
     if error
       {name} := e! as {name: string}
@@ -102,18 +102,18 @@ function throws(text: string, compilerOpts?: CompilerOptions, opt?: "only" | "sk
           s = s.replace /\nExpected:[^]*$/, ''
       else // just name
         s = name
-      assert.equal s, error, """
+      assert.equal s, error, ```
 
         --- Source         ---
-        #{src}
+        ${src}
 
         --- Expected Error ---
-        #{error}
+        ${error}
 
         --- Got Error      ---
-        #{e!.toString()}
+        ${e!.toString()}
 
-      """
+      ```
 
 throws.only = (text: string, compilerOpts?: CompilerOptions) -> throws text, compilerOpts, "only"
 throws.skip = (text: string, compilerOpts?: CompilerOptions) -> throws text, compilerOpts, "skip"
