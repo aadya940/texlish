@@ -36,13 +36,15 @@ export type ASTNode
 
 export interface Braced extends ASTParent
   type: "Braced"
-  body: AST
+  body: AST[]
 
 export interface Comment extends ASTToken
   type: "Comment"
 
 export interface Command extends ASTToken
   type: "Command"
+  // \begin and \end commands get the name of the environment attached here
+  env?: string
 
 export interface Delimiter
   type: "Delimiter"

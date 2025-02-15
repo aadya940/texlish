@@ -1,27 +1,28 @@
 type { AST, CompilerOptions, Delimiter } from ./types.civet
-{ iteratePrePost, iterateFlat } from ./util.civet
+{ iteratePrePost, iterateFlatArrays } from ./util.civet
 
 defaultDocumentClass := "\\documentclass[11pt]{article}"
 
-// Root node is always an array of statements
+/** Root node is always an array of statements */
 export function process(root: AST[], options: CompilerOptions): AST
   processMarkdown root
+  processBeginEnd root
   processDocument root unless options.fragment
   root
 
-// Based on CommonMark spec:
-// https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
-// Deviations:
-// * We treat ***, ****, etc. as their own styles which can be defined.
-//   By contrast, CommonMark only defines * and ** and defines how they nest.
-// * If one of the delimiters is both left and right delimiting, CommonMark
-//   requires forbids the delimiters from having total size a multiple of 3.
-//   Instead, we forbid one delimiter from being exactly half the size of the
-//   other, which forbids the useless cases of either immediately closing and
-//   opening the same level of emphasis, or nesting two identical emphases.
+/** Process Markdown delimiters, based on CommonMark spec:
+https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+Deviations:
+* We treat ***, ****, etc. as their own styles which can be defined.
+  By contrast, CommonMark only defines * and ** and defines how they nest.
+* If one of the delimiters is both left and right delimiting, CommonMark
+  requires forbids the delimiters from having total size a multiple of 3.
+  Instead, we forbid one delimiter from being exactly half the size of the
+  other, which forbids the useless cases of either immediately closing and
+  opening the same level of emphasis, or nesting two identical emphases.
+*/
 function processMarkdown(root: AST[]): void
-  for parent of iterateFlat root
-    continue unless Array.isArray parent
+  for parent of iterateFlatArrays root
     opens: Delimiter[] .= []
     for each child of parent
       continue unless child is like { type: "Delimiter" }
@@ -74,7 +75,25 @@ function processMarkdown(root: AST[]): void
 function liftsToPreamble(node: AST): boolean
   node is like { type: "Preamble" }, { type: "Use" }, { type: "Uses" }
 
-// Automatic `\begin{document}`, `\end{document}`, `\maketitle`
+/** Attach environment names to \begin and \end commands */
+function processBeginEnd(root: AST[]): void
+  for parent of iterateFlatArrays root
+    for each child, let i of parent
+      if child is like { type: "Command" } and
+         child.token is like "\\begin", "\\end"
+        while parent[++i] is like /^\s*$/
+        next := parent[i]
+        switch next
+          <? "string"
+            if match := next.match /^\s*(.)/
+              child.env = match[1]
+          { type: "Braced" }
+            //@ts-ignore deep type recursion
+            body := next.body.flat Infinity
+            if body[0] <? "string"
+              child.env = body[0]
+
+/** Automatic `\begin{document}`, `\end{document}`, `\maketitle` */
 function processDocument(root: AST[]): void
   // Find any existing \begin{document}, \end{document}, \maketitle, \title,
   // \documentclass in the document, and put them in `document`.
@@ -83,7 +102,7 @@ function processDocument(root: AST[]): void
   preamble: AST[][] .= []
   preambleDepth .= 0
   for {node: parent, post} of iteratePrePost root
-    // Keep track of "preamble depth" so we don't add descandants too
+    // Keep track of "preamble depth" so we don't add descendants too
     if liftsToPreamble parent
       if post
         preambleDepth--
@@ -92,16 +111,13 @@ function processDocument(root: AST[]): void
     continue if post
     // We process array parents of actual content so we can find siblings
     continue unless Array.isArray parent
-    for each child, let i of parent
+    for each child of parent
       if child is like { type: "Environment", env: "document" }
         document["\\begin"] = document["\\end"] = parent
       else if child is like { type: "Command" }
         switch child.token
           when "\\begin", "\\end"
-            while parent[++i] is like /^\s*$/
-            next := parent[i]
-            if next is like { type: "Braced" } and
-              next.body is like [ "document" ], [ [ "document" ] ], [ [ "document" ], [] ], [ [], [ "document" ] ]
+            if child.env is "document"
               document[child.token] ?= parent
           when "\\maketitle", "\\title", "\\documentclass"
             document[child.token] ?= parent

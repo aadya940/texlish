@@ -1,6 +1,6 @@
 type { AST } from ./types.civet
 
-// Generate all nodes in the tree in prefix order.
+/** Generate all nodes in the tree in prefix order. */
 export function iterate(node: AST): Generator<AST>
   yield node
   return unless node <? "object"
@@ -8,24 +8,25 @@ export function iterate(node: AST): Generator<AST>
     for each child of node
       yield* iterate child
   else if "children" in node
-    for each child of node.children
-      yield* iterate child
+    yield* iterate node.children
 
-// Generate all nodes in the tree in prefix order.
-export function iterateFlat(node: AST): Generator<AST>
+/**
+Generate all array nodes in the tree in prefix order,
+with arrays flattened
+*/
+export function iterateFlatArrays(node: AST): Generator<AST[]>
   if Array.isArray node
     //@ts-ignore deep type recursion
     node = node.flat Infinity
-  yield node
+    yield node
   return unless node <? "object"
   if Array.isArray node
     for each child of node
-      yield* iterate child
+      yield* iterateFlatArrays child
   else if "children" in node
-    for each child of node.children
-      yield* iterate child
+    yield* iterateFlatArrays node.children
 
-// Generate every node twice, once before and once after recursion.
+/** Generate every node twice, once before and once after recursion. */
 export function iteratePrePost(node: AST): Generator<{node: AST, post: boolean}>
   yield {node, post: false}
   return unless node <? "object"
@@ -37,15 +38,17 @@ export function iteratePrePost(node: AST): Generator<{node: AST, post: boolean}>
       yield* iteratePrePost child
   yield {node, post: true}
 
-// Find any node that matches a given condition, or undefined if not found.
+/** Find any node that matches a given condition, or undefined if not found. */
 export function find(node: AST, match: (candidate: AST) => boolean): AST
   for subnode of iterate node
     if match subnode
       return subnode
   return
 
-// Find an "end" node (some step down the path of last nonempties)
-// that matches a given condition, or undefined if not found.
+/**
+Find an "end" node (some step down the path of last nonempties)
+that matches a given condition, or undefined if not found.
+*/
 export function getEnd(node: AST, match: (candidate: AST) => boolean): AST
   if match node
     node
@@ -61,8 +64,10 @@ export function getEnd(node: AST, match: (candidate: AST) => boolean): AST
     else if "children" in node
       getEnd node.children, match
 
-// Modify an "end" node (some step down the path of last nonempties)
-// where the modify function returns something different.
+/**
+Modify an "end" node (some step down the path of last nonempties)
+where the modify function returns something different.
+*/
 export function modifyEnd(node: AST, modify: (candidate: AST) => AST): AST
   mod := modify node
   if mod is not node
@@ -84,7 +89,7 @@ export function modifyEnd(node: AST, modify: (candidate: AST) => AST): AST
     else
       node
 
-// Trim end whitespace
+/** Trim end whitespace */
 export function trimEnd(node: AST): AST
   modifyEnd node, (node) =>
     if node <? "string"
@@ -102,7 +107,7 @@ export function trimEndComment(node: AST): AST
     else
       node
 
-// Extract comment at end of [text, body] pair to replace comment
+/** Extract comment at end of [text, body] pair to replace comment */
 export function commentForTextBody(text: AST, body: AST[]): [AST, AST, AST]
   let comment: AST
   if body#
