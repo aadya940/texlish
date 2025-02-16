@@ -1,3 +1,5 @@
+% This was the original sketch for how Texlish might look.
+
 ::styles
   * = \emph
   ** = \textbf
