@@ -1,26 +1,26 @@
->>styles
+::styles
   * = \emph
   ** = \textbf
   *** = \defn
   @ = \cref
 
->>use
+::use
   amsmath
   colortbl
   cleveref
   geometry:
     - margin = 1in
     - letterpaper
->>use hyperref:
+::use hyperref:
   - pdftitle = Hello World
   - pdfauthor = Me
 
->>commands
+::commands
   \NP = \textbf{NP}
   -> \def\NP{\textbf{NP}}
->>spaces \NP
->>spaces \NP := \textbf{NP}
->>dumbquotes
+::spaces \NP
+::spaces \NP := \textbf{NP}
+::dumbquotes
 
 \title: Example Document
 
@@ -67,7 +67,7 @@ $ x^2 + y^10 - z^(a+b) $
 
 # Results
 
-> theorem [Big Theorem] @=thm:big
+: theorem [Big Theorem] @=thm:big
   This is true.
   - One
   - Two
@@ -75,7 +75,7 @@ $ x^2 + y^10 - z^(a+b) $
       1. One
       2. Two
 
-> theorem:
+: theorem:
   ~ Big Theorem
   @=thm:big
   This is true.
@@ -88,11 +88,11 @@ See Theorem @thm:big on page #@thm:big
 [[Langerman-2024 (p. 101), Demaine-2024]]
 -> \cite[p. 101]{Langerman-2024}, \cite{Demaine-2024}
 
-> table
-  > tabular: ccc
+: table
+  : tabular: ccc
     a & b & c \\
 
-> quote
+: quote
   \raggedleft
   "Three Rings for the Elven-kings under the sky, \dots"
   -> ``Three Rings for the Elven-kings under the sky, \dots''
