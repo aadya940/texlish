@@ -1,0 +1,46 @@
+{
+  "name": "texlish",
+  "displayName": "Texlish",
+  "description": "Texlish Language Support",
+  "version": "0.0.0",
+  "publisher": "edemaine",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edemaine/texlish.git"
+  },
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "texlish",
+        "extensions": [
+          ".texlish"
+        ],
+        "configuration": "./languages/texlish-language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "texlish",
+        "scopeName": "text.tex.texlish",
+        "path": "./syntaxes/texlish.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "bash ./build/build.sh",
+    "package": "pnpm run build && vsce package",
+    "vsce-publish": "pnpm run build && vsce publish"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.2.2",
+    "yaml": "^2.5.1"
+  }
+}

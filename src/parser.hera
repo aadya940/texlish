@@ -60,7 +60,7 @@ EOL
     }
 
 Statement
-  Header
+  Heading
   MetaBlock
   Environment
   CommandWithColonArgument
@@ -191,7 +191,7 @@ ParenBalancedContent
   ParenthesizedContent
   TextPart
 
-Header
+Heading
   /(!+|\.*)(#+)(\*?)\s+/ TrimmedText:title ->
     let [, dot, hash, star] = $1
     let dots = dot.length
@@ -202,7 +202,7 @@ Header
       `\\${'sub'.repeat(hashes-1)}section`
     if (star) command += '*'
     return {
-      type: "Header",
+      type: "Heading",
       subtype: command,
       children: [ command, '{', title, '}' ],
     }

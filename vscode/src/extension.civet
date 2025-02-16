@@ -1,0 +1,6 @@
+* as vscode from 'vscode'
+
+export function activate(context: vscode.ExtensionContext)
+  console.log 'Loaded texlish extension'
+
+export function deactivate()

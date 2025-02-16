@@ -1,0 +1,23 @@
+{ build } from esbuild
+civetPlugin from @danielx/civet/esbuild
+
+minify := false // !watch or process.argv.includes '--minify'
+sourcemap := true
+
+build({
+  entryPoints: ['src/extension.civet']
+  tsconfig: "./tsconfig.json"
+  bundle: true
+  external: [
+    'vscode'
+  ]
+  format: "cjs"
+  sourcemap
+  minify
+  platform: 'node'
+  plugins: [
+    civetPlugin ts: 'civet'
+  ]
+  outfile: 'dist/extension.js'
+}).catch ->
+  process.exit 1

@@ -1,0 +1,14 @@
+YAML from yaml
+fs from node:fs
+path from node:path
+
+process.chdir path.join import.meta.dirname, '..'
+for yamlFilename of [
+  'languages/texlish-language-configuration.yaml'
+  'syntaxes/texlish.tmLanguage.yaml'
+]
+  jsonFilename := yamlFilename.replace /\.yaml$/, '.json'
+  continue if yamlFilename is jsonFilename
+  console.log `${yamlFilename} -> ${jsonFilename}`
+  y .= YAML.parse fs.readFileSync yamlFilename, encoding: 'utf8'
+  fs.writeFileSync jsonFilename, JSON.stringify y, undefined, 2

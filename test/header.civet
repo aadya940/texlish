@@ -4,9 +4,9 @@ describe 'Markdown headers (#/##/...)', ->
   testCase '''
     single line
     ---
-    # Header
+    # Heading
     ---
-    \\section{Header}
+    \\section{Heading}
   '''
 
   testCase '''

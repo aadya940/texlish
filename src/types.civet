@@ -27,7 +27,7 @@ export type ASTNode
   | Delimiter
   | Environment
   | EOL
-  | Header
+  | Heading
   | Indent
   | List
   | Preamble
@@ -66,8 +66,8 @@ export interface Environment extends ASTParent
 export interface EOL extends ASTToken
   type: "EOL"
 
-export interface Header extends ASTParent
-  type: "Header"
+export interface Heading extends ASTParent
+  type: "Heading"
   subtype: "\\part" | "\\chapter" | "\\section" | "\\subsection" | "\\subsubsection" | "\\paragraph" | "\\subparagraph"
 
 export interface Indent extends ASTToken
