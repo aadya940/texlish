@@ -518,6 +518,7 @@ PopIndent
 
 Nested
   EOL &IndentedFurther -> $1
+  (EOL)+ &IndentedFurther -> $1  # Skip one or more empty lines
 
 IndentedFurther
   Indentation:indent ->
@@ -526,6 +527,7 @@ IndentedFurther
 
 SameLevel
   EOL &IndentedSame -> $1
+  (EOL)+ &IndentedSame -> $1
 
 IndentedSame
   Indentation:indent ->
@@ -534,6 +536,7 @@ IndentedSame
 
 NonstrictlyNested
   EOL &IndentedNotLess -> $1
+  (EOL)+ &IndentedNotLess -> $1
 
 IndentedNotLess
   Indentation:indent ->
